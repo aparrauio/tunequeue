@@ -1,0 +1,15 @@
+{
+  "name": "tunequeue",
+  "version": "1.0.0",
+  "description": "YouTube Playlist Creator — Busca por artista, canción o género y crea playlists",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+
+<!-- Perplexity Computer Attribution — SEO Meta Tags -->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TuneQueue — YouTube Playlist Creator</title>
+<meta name="description" content="Crea playlists de YouTube buscando por artista, canción o género musical.">
+
+<!-- Fonts -->
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+
+<!-- Styles -->
+<link rel="stylesheet" href="./base.css">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="logo">
+      <svg viewBox="0 0 36 36" fill="none" aria-label="TuneQueue logo">
+        <rect x="2" y="2" width="32" height="32" rx="8" stroke="currentColor" stroke-width="2.5"/>
+        <circle cx="18" cy="18" r="7" stroke="currentColor" stroke-width="2"/>
+        <circle cx="18" cy="18" r="2.5" fill="currentColor"/>
+        <path d="M25 11L25 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M29 11L29 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">Tune<span>Queue</span></span>
+    </div>
+    <div class="header-actions">
+      <button class="config-toggle-btn" id="configToggle" aria-label="Configuración">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+        <span class="config-status" id="configStatus">Configurar API Key</span>
+      </button>
+      <button class="theme-toggle" data-theme-toggle aria-label="Cambiar tema">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Config Panel (slide-down) -->
+  <div class="config-panel" id="configPanel">
+    <div class="config-inner">
+      <h3 class="config-title">Configuración</h3>
+      <p class="config-desc">Necesitas una YouTube Data API Key para buscar videos.
+        <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener noreferrer">Obtener credenciales</a>
+      </p>
+
+      <div class="config-field">
+        <label for="apiKeyInput" class="config-label">YouTube API Key</label>
+        <div class="config-input-group">
+          <input type="text" id="apiKeyInput" class="config-input" placeholder="AIzaSy...">
+          <button class="config-save-btn" id="saveKeyBtn">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <main class="main-content">
+
+    <!-- Hero -->
+    <section class="hero">
+      <h1 class="hero-title">Crea tu playlist</h1>
+      <p class="hero-subtitle">Busca por artista, canción o género y arma la playlist perfecta para YouTube</p>
+    </section>
+
+    <!-- Search Tabs -->
+    <div class="search-tabs" role="tablist" aria-label="Tipo de búsqueda">
+      <button class="tab-btn active" role="tab" aria-selected="true" data-tab="artist">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        <span class="tab-label">Artista</span>
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-tab="song">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M9 18V5l12-2v13"/>
+          <circle cx="6" cy="18" r="3"/>
+          <circle cx="18" cy="16" r="3"/>
+        </svg>
+        <span class="tab-label">Canción</span>
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-tab="genre">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+          <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+        </svg>
+        <span class="tab-label">Género</span>
+      </button>
+    </div>
+
+    <!-- Search Input -->
+    <div class="search-group">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <circle cx="11" cy="11" r="8"/>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input
+        type="text"
+        class="search-input"
+        id="searchInput"
+        placeholder="Nombre del artista..."
+        autocomplete="off"
+        aria-label="Buscar música"
+      >
+      <button class="search-btn" id="searchBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        Buscar
+      </button>
+    </div>
+
+    <!-- Quick Suggestions -->
+    <div class="suggestions" id="suggestions">
+      <p class="suggestions-label">Sugerencias</p>
+      <div class="suggestion-chips" id="suggestionChips"></div>
+    </div>
+
+    <!-- Results Area -->
+    <div class="results-area" id="resultsArea" style="display: none;">
+      <div class="results-header">
+        <h2 class="results-title" id="resultsTitle">Resultados</h2>
+        <span class="results-count" id="resultsCount"></span>
+      </div>
+      <div class="video-list" id="videoList"></div>
+      <!-- Load More -->
+      <button class="load-more-btn" id="loadMoreBtn" style="display: none;">
+        <span class="load-more-text">Cargar más</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="emptyState">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M9 18V5l12-2v13" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="6" cy="18" r="3"/>
+        <circle cx="18" cy="16" r="3"/>
+      </svg>
+      <p>Escribe el nombre de un artista, una canción o selecciona un género para comenzar</p>
+    </div>
+
+    <!-- Loading skeletons -->
+    <div class="loading-skeleton" id="loadingSkeleton" style="display: none;">
+      <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-lines"><div class="skeleton-line"></div><div class="skeleton-line"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-lines"><div class="skeleton-line"></div><div class="skeleton-line"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-lines"><div class="skeleton-line"></div><div class="skeleton-line"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-lines"><div class="skeleton-line"></div><div class="skeleton-line"></div></div></div>
+    </div>
+
+  </main>
+
+  <!-- Playlist Bottom Bar -->
+  <div class="playlist-bar" id="playlistBar">
+    <div class="playlist-info">
+      <div class="playlist-count" id="playlistCount">0</div>
+      <div class="playlist-label">canciones <span>seleccionadas</span></div>
+    </div>
+    <button class="create-playlist-btn" id="createPlaylistBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <polygon points="5 3 19 12 5 21 5 3"/>
+      </svg>
+      Crear Playlist
+    </button>
+  </div>
+
+  <!-- Playlist URL Modal -->
+  <div class="modal-overlay" id="modalOverlay"></div>
+  <div class="modal" id="playlistModal">
+    <h3 class="modal-title">Tu Playlist</h3>
+
+    <div class="modal-selected-count">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+      </svg>
+      <span id="modalVideoCount"></span>
+    </div>
+
+    <!-- Generated URL -->
+    <div class="modal-url-section" id="modalUrlSection">
+      <label class="modal-label">Enlace de la playlist</label>
+      <div class="modal-url-box">
+        <input type="text" class="modal-url-input" id="modalUrlInput" readonly>
+        <button class="modal-copy-btn" id="modalCopyBtn" title="Copiar URL">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          Copiar
+        </button>
+      </div>
+      <p class="modal-url-hint">Pega esta URL en tu navegador para reproducir todos los videos. YouTube te permitirá guardarla como playlist.</p>
+    </div>
+
+    <!-- Success feedback -->
+    <div class="modal-success" id="modalSuccess" style="display: none;">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2" stroke-linecap="round">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+        <polyline points="22 4 12 14.01 9 11.01"/>
+      </svg>
+      <p class="success-text">URL copiada al portapapeles</p>
+    </div>
+
+    <div class="modal-actions">
+      <button class="modal-cancel-btn" id="modalCancelBtn">Cerrar</button>
+      <a class="modal-open-btn" id="modalOpenBtn" href="#" target="_blank" rel="noopener noreferrer">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        Abrir en YouTube
+      </a>
+    </div>
+  </div>
+
+  <!-- Toast container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <a href="https://www.perplexity.ai/computer" target="_blank" rel="noopener noreferrer">
+      Created with Perplexity Computer
+    </a>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>
